@@ -22,6 +22,7 @@ body > * {
 .title h1 {
   margin: 0;
   padding: 0;
+  font-weight: normal;
 }
 .hidden {
   display: none;
@@ -81,6 +82,7 @@ body > * {
   width: 25%;
   height: 3rem;
   font-size: 1.3rem;
+  font-family: "Microsoft YaHei", sans-serif;
   color: white;
   border: 1px solid #cccccc;
   background: transparent;

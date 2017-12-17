@@ -1,3 +1,7 @@
+/**
+ * 矩阵工具集
+ * @type {{makeRow(*=): *, makeMatrix(*=): *, shuffle(*): *}}
+ */
 const matrixToolkit = {
 
     makeRow(v = 0) {
@@ -26,4 +30,25 @@ const matrixToolkit = {
     }
 };
 
-module.exports = matrixToolkit;
+/**
+ *  宫坐标系工具集
+ */
+const boxToolkit = {
+    // TODO
+};
+
+//工具集
+
+module.exports = class toolkit {
+
+    //矩阵与数组相关的工具
+    static get matrix() {
+        return matrixToolkit;
+    }
+
+    //宫坐标系相关的工具
+    static get box() {
+        return boxToolkit;
+    }
+
+};
