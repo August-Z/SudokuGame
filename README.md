@@ -89,6 +89,24 @@
 
 当然，如果我们 join 出来的结果是包含 "0" 或者有重复数字的(例"123406789","1233567889")，则为 false。
     
+```javascript
+const boxToolkit = {
+    convertToBoxIndex(rowIndex, colIndex) {
+        return {
+            boxIndex: Math.floor(rowIndex / 3) * 3 + Math.floor(colIndex / 3),
+            cellIndex: rowIndex % 3 * 3 + colIndex % 3
+        }
+    },
+
+    convertFromBoxIndex(boxIndex, cellIndex) {
+        return {
+            rowIndex: Math.floor(boxIndex / 3) * 3 + Math.floor(cellIndex / 3),
+            colIndex: boxIndex % 3 * 3 + cellIndex % 3
+        }
+    }
+};
+```
+上方则是最核心的宫坐标与横纵坐标转换的算法函数
     
   
     

@@ -89,7 +89,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 //生成九宫格
-var toolkit = __webpack_require__(2);
+var Toolkit = __webpack_require__(2);
 
 var Grid = function () {
     function Grid(container) {
@@ -101,7 +101,7 @@ var Grid = function () {
     _createClass(Grid, [{
         key: "build",
         value: function build() {
-            var matrix = toolkit.matrix.makeMatrix();
+            var matrix = Toolkit.matrix.makeMatrix();
 
             var rowGroupClasses = ["row_g_top", "row_g_middle", "row_g_bottom"];
             var colGroupClasses = ["col_g_left", "col_g_center", "col_g_right"];
@@ -184,6 +184,19 @@ var matrixToolkit = {
             array[j] = _ref[1];
         }
         return array;
+    },
+
+
+    /**
+     * 
+     * @param martix
+     * @param n
+     * @param rowIndex
+     * @param colIndex
+     * @returns {boolean}
+     */
+    checkFillable: function checkFillable(martix, n, rowIndex, colIndex) {
+        return true;
     }
 };
 

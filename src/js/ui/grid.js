@@ -1,5 +1,5 @@
 //生成九宫格
-const toolkit = require("../core/toolkit.js");
+const Toolkit = require("../core/toolkit.js");
 
 class Grid {
     constructor(container) {
@@ -7,7 +7,7 @@ class Grid {
     }
 
     build() {
-        const matrix = toolkit.matrix.makeMatrix();
+        const matrix = Toolkit.matrix.makeMatrix();
 
         const rowGroupClasses = ["row_g_top", "row_g_middle", "row_g_bottom"];
         const colGroupClasses = ["col_g_left", "col_g_center", "col_g_right"];

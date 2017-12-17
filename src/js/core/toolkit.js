@@ -27,6 +27,26 @@ const matrixToolkit = {
             [array[i], array[j]] = [array[j], array[i]];
         }
         return array;
+    },
+
+    /**
+     * 检查制定位置是否可以填写数字 n
+     * @param martix
+     * @param n
+     * @param rowIndex
+     * @param colIndex
+     * @returns {boolean}
+     */
+    checkFillable(martix, n, rowIndex, colIndex) {
+        const row = martix[rowIndex];
+        const column = this.makeRow().map((v, i) => martix[i][colIndex]);
+        // const boxIndex =
+
+
+        // const box = ....
+
+
+        return true;
     }
 };
 
@@ -34,7 +54,19 @@ const matrixToolkit = {
  *  宫坐标系工具集
  */
 const boxToolkit = {
-    // TODO
+    convertToBoxIndex(rowIndex, colIndex) {
+        return {
+            boxIndex: Math.floor(rowIndex / 3) * 3 + Math.floor(colIndex / 3),
+            cellIndex: rowIndex % 3 * 3 + colIndex % 3
+        }
+    },
+
+    convertFromBoxIndex(boxIndex, cellIndex) {
+        return {
+            rowIndex: Math.floor(boxIndex / 3) * 3 + Math.floor(cellIndex / 3),
+            colIndex: boxIndex % 3 * 3 + cellIndex % 3
+        }
+    }
 };
 
 //工具集
