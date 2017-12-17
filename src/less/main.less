@@ -50,6 +50,10 @@ body {
       border-bottom-width: 0;
       background: white;
 
+      &.col_g_right {
+        border-right-width: 1px;
+      }
+
       &:first-child {
         border-left-width: 2px;
       }
@@ -57,7 +61,12 @@ body {
       &:last-child {
         border-right-width: 2px;
       }
+    }
 
+    &.row_g_bottom {
+      > span {
+        border-bottom-width: 1px;
+      }
     }
 
     &:first-child {

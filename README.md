@@ -129,4 +129,20 @@ class Grid {
 //创建1个实例，执行 build 方法
 new Grid($("#container")).build();
 ```
+
+### 保持小方块为正方形
+如果可以，用户应该在任意设配上看到的小方块都是正方形！让我们来用代码实现：
+```javascript
+class Grid {
+    layout() {
+        const width = $("span:first", this._$container).width(); //取得小方块的宽度
+        //适配不同的屏幕产生的小方块宽度，让它的高度与其宽度相等
+        $("span", this._$container).height(width)
+            .css({
+                "line-height": `${width}px`,
+                "font-size": width < 32 ? `${width / 2}` : ""
+            });
+    }
+}
+```
   

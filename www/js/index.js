@@ -104,12 +104,24 @@ var Grid = function () {
 
             this._$container.append($divArray);
         }
+    }, {
+        key: "layout",
+        value: function layout() {
+            var width = $("span:first", this._$container).width(); //取得小方块的宽度
+            //适配不同的屏幕产生的小方块宽度，让它的高度与其宽度相等
+            $("span", this._$container).height(width).css({
+                "line-height": width + "px",
+                "font-size": width < 32 ? "" + width / 2 : ""
+            });
+        }
     }]);
 
     return Grid;
 }();
 
-new Grid($("#container")).build();
+var grid = new Grid($("#container"));
+grid.build();
+grid.layout();
 
 /***/ }),
 /* 1 */

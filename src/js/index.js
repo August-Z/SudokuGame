@@ -29,6 +29,19 @@ class Grid {
         this._$container.append($divArray);
 
     }
+
+    layout() {
+        const width = $("span:first", this._$container).width(); //取得小方块的宽度
+        //适配不同的屏幕产生的小方块宽度，让它的高度与其宽度相等
+        $("span", this._$container).height(width)
+            .css({
+                "line-height": `${width}px`,
+                "font-size": width < 32 ? `${width / 2}` : ""
+            });
+    }
+
 }
 
-new Grid($("#container")).build();
+const grid = new Grid($("#container")); //创建实例
+grid.build();   //开始构建
+grid.layout();  //调整高度

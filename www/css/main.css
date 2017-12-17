@@ -41,11 +41,17 @@ body > * {
   border-bottom-width: 0;
   background: white;
 }
+.container .row > span.col_g_right {
+  border-right-width: 1px;
+}
 .container .row > span:first-child {
   border-left-width: 2px;
 }
 .container .row > span:last-child {
   border-right-width: 2px;
+}
+.container .row.row_g_bottom > span {
+  border-bottom-width: 1px;
 }
 .container .row:first-child > span {
   border-top-width: 2px;
