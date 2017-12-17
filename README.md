@@ -38,11 +38,12 @@
 ## 游戏算法
 
 其实数独游戏不可避免的会用到递归，采用一个简单的算法，从数字1开始，失败重算，随机位置，采用 Fisher-Yates 洗牌算法：遍历数组，指针所指元素随机与它之后的元素进行值的交换。
-
+   
     /**
     * Fisher-Yates 洗牌算法
     * @param array 需要进行洗牌的数据
     */
+    ```javascript
     shuffle(array) {
         const len = array.length; //数组的长度
         const endIndex = len - 2; //因为最后一个元素不需要交换,省略1位,故不是 len - 1
@@ -52,9 +53,10 @@
         }
         return array;
     }
+    ```
 
 
-#### 检查算法 
+### 检查算法 
 
 按行 / 按列 / 按宫 - array as result
 
