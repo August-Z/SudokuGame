@@ -1,7 +1,7 @@
 # SudokuGame
 数独游戏，通过 JavaScript 技术实现向 TypeScript 技术实现的转换。使用的工具有 Gulp、Webpack、 Babel 和 TSC(TypeScript Compiler) 等
 
-##界面及操作
+## 界面及操作
 
 *   弹出数字面板
 1.  点击数字直接选用该数字填写当前格
@@ -41,7 +41,7 @@
 
 其实数独游戏不可避免的会用到递归，采用一个简单的算法，从数字1开始，失败重算，随机位置，采用 Fisher-Yates 洗牌算法：遍历数组，指针所指元素随机与它之后的元素进行值的交换。
 
-####检查算法 
+#### 检查算法 
 
 按行 / 按列 / 按宫 - array as result
 *   抽取行数据，So easy
