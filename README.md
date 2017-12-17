@@ -90,3 +90,43 @@
 当然，如果我们 join 出来的结果是包含 "0" 或者有重复数字的(例"123406789","1233567889")，则为 false。
     
     
+  
+    
+## 九宫格界面搭建
+如果我们想每一宫的边框加粗，那么必须要预设好不同的 class，这样在样式的设置上会非常的方便，当然这可以是建立在 OOP 之上的
+```javascript
+class Grid {
+    constructor(container) {
+        this._$container = container;
+    }
+
+    build() {
+        const matrix = toolkit.makeMatrix();
+
+        //预设的 classes 
+        const rowGroupClasses = ["row_g_top", "row_g_middle", "row_g_bottom"];
+        const colGroupClasses = ["col_g_left", "col_g_center", "col_g_right"];
+
+
+        const $cells = matrix.map(rowValues =>
+            rowValues.map((cellValue, colIndex) => {
+                return $("<span>")
+                    .addClass(colGroupClasses[colIndex % 3]) 
+                    .text(cellValue);
+            }));
+
+        const $divArray = $cells.map(($spanArray, rowIndex) => {
+            return $("<div class='row'>")
+                .addClass(rowGroupClasses[rowIndex % 3])
+                .append($spanArray);
+        });
+
+        this._$container.append($divArray);
+
+    }
+}
+
+//创建1个实例，执行 build 方法
+new Grid($("#container")).build();
+```
+  
