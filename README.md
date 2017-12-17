@@ -24,26 +24,64 @@
     
 用2个带有 es6 新特性的函数来制造我们的数据吧：
 
-    function makeRow(v = 0) {
+    makeRow(v = 0) {
         const array = new Array(9);
         array.fill(v);
         return array;
-    }
+    },
     
-    function makeMatrix(v = 0) {
+    makeMatrix(v = 0) {
         //使用映射来制造各不相同的 Array , 第二个参数代表了 map() 函数的参数(简写)
-        return Array.from({length: 9}, () => makeRow(v));
+        return Array.from({length: 9}, () => this.makeRow(v));
     }
-    
-    const a = makeMatrix();
     
 ## 游戏算法
 
 其实数独游戏不可避免的会用到递归，采用一个简单的算法，从数字1开始，失败重算，随机位置，采用 Fisher-Yates 洗牌算法：遍历数组，指针所指元素随机与它之后的元素进行值的交换。
 
+    /**
+    * Fisher-Yates 洗牌算法
+    * @param array 需要进行洗牌的数据
+    */
+    shuffle(array) {
+        const len = array.length; //数组的长度
+        const endIndex = len - 2; //因为最后一个元素不需要交换,省略1位,故不是 len - 1
+        for (let i = 0; i <= endIndex; i++) {
+            const j = i + Math.floor(Math.random() * (len - i));
+            [array[i], array[j]] = [array[j], array[i]]; //解构赋值
+        }
+        return array;
+    }
+
+
 #### 检查算法 
 
 按行 / 按列 / 按宫 - array as result
+
 *   抽取行数据，So easy
 *   抽取列数据，多转一个弯
 *   **抽取宫数据，寻找关系**
+
+其中最复杂的检查过程，就是抽取每个宫的数据，这里举例**第六宫**：
+
+    n = 5;//序号从0开始，这里代表第六宫
+    
+    //坐标
+    bX = n % 3 = 2;
+    bY = n / 3 = 1;
+    
+    //起始格坐标
+    x0 = bx * 3 = 6;
+    y0 = by * 3 = 3;
+    
+    //宫内小格坐标,序号 i
+    x = x0 + i % 3;
+    y = y0 + i / 3;
+    
+    //这样,我们就能获得到每一宫的每一格的坐标
+    array = [1,2,3,4,5,6,7,8,9]; //假设这是符合的数组
+    array.join(""); //如果它和 "123456789" 全等,则游戏判断就是 true
+   
+当然，如果我们 join 出来的结果是包含 "0" 或者有重复数字的(例"123406789","1233567889")，则为 false。
+    
+    
