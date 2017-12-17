@@ -1,6 +1,6 @@
 module.exports = {
     entry:{
-        index : "./js/index.js"
+        index : "./js/index"
     },
     output:{
         filename:"[name].js"
@@ -10,15 +10,15 @@ module.exports = {
         extensions:[".js"]
     },
     module:{
-        loader:[
+        loaders:[
             {
                 test:/\.js$/,
-                loader:"babel",
-                exclude:"node_modules",
+                loader:"babel-loader",
+                exclude:"/src/node_modules",
                 query:{
                     presets:["es2015"]
                 }
             }
         ]
     }
-}
+};
