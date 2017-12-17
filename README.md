@@ -24,37 +24,38 @@
     
 用2个带有 es6 新特性的函数来制造我们的数据吧：
 
-    makeRow(v = 0) {
-        const array = new Array(9);
-        array.fill(v);
-        return array;
-    },
+```javascript
+function makeRow(v = 0) {
+    const array = new Array(9);
+    array.fill(v);
+    return array;
+}
     
-    makeMatrix(v = 0) {
-        //使用映射来制造各不相同的 Array , 第二个参数代表了 map() 函数的参数(简写)
-        return Array.from({length: 9}, () => this.makeRow(v));
-    }
+function makeMatrix(v = 0) {
+    //使用映射来制造各不相同的 Array , 第二个参数代表了 map() 函数的参数(简写)
+    return Array.from({length: 9}, () => this.makeRow(v));
+} 
+```
     
 ## 游戏算法
 
 其实数独游戏不可避免的会用到递归，采用一个简单的算法，从数字1开始，失败重算，随机位置，采用 Fisher-Yates 洗牌算法：遍历数组，指针所指元素随机与它之后的元素进行值的交换。
    
-    /**
-    * Fisher-Yates 洗牌算法
-    * @param array 需要进行洗牌的数据
-    */
-    ```javascript
-    shuffle(array) {
-        const len = array.length; //数组的长度
-        const endIndex = len - 2; //因为最后一个元素不需要交换,省略1位,故不是 len - 1
-        for (let i = 0; i <= endIndex; i++) {
-            const j = i + Math.floor(Math.random() * (len - i));
-            [array[i], array[j]] = [array[j], array[i]]; //解构赋值
-        }
-        return array;
+```javascript
+/**
+* Fisher-Yates 洗牌算法
+* @param array 需要进行洗牌的数据
+*/
+function shuffle(array) {
+    const len = array.length; //数组的长度
+    const endIndex = len - 2; //因为最后一个元素不需要交换,省略1位,故不是 len - 1
+    for (let i = 0; i <= endIndex; i++) {
+        const j = i + Math.floor(Math.random() * (len - i));
+        [array[i], array[j]] = [array[j], array[i]]; //解构赋值
     }
-    ```
-
+    return array;
+}
+```
 
 ### 检查算法 
 
