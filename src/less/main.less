@@ -71,8 +71,15 @@ body {
         color: white;
       }
 
-      &.mark1 {
+      &.error {
         background-color: lightpink;
+        &.empty {
+          color: lightpink;
+        }
+      }
+
+      &.mark1 {
+        background-color: lightblue;
       }
 
       &.mark2 {
@@ -98,6 +105,7 @@ body {
         border-bottom-width: 2px;
       }
     }
+
   }
 }
 
@@ -107,7 +115,6 @@ body {
 
   position: absolute;
   padding-left: 0;
-!important;
 
   .row {
     > span {

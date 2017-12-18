@@ -8,11 +8,18 @@ grid.layout();  //调整高度
 const popupNumbers = new PopupNumbers($("#popupNumbers"));
 grid.bindPopup(popupNumbers);   //绑定操作
 
-$("#check").on("click",e => {});
+//底部按键
+$("#check").on("click",e => {
+    grid.check();
+});
 
-$("#reset").on("click",e => {});
+$("#reset").on("click",e => {
+    grid.reset();
+});
 
-$("#clear").on("click",e => {});
+$("#clear").on("click",e => {
+    grid.clear();
+});
 
 $("#rebuild").on("click",e => {
     grid.rebuild();

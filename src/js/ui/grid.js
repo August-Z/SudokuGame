@@ -1,6 +1,7 @@
 //生成九宫格
 const Toolkit = require("../core/toolkit.js");
 const Sudoku = require("../core/sudoku.js");
+const Check = require("../core/checker.js");
 
 class Grid {
     constructor(container) {
@@ -8,9 +9,6 @@ class Grid {
     }
 
     build() {
-        // const gen = new Generator();
-        // gen.generate();
-        // const matrix = gen.matrix;
 
         const suduku = new Sudoku();
         suduku.make();
@@ -54,6 +52,58 @@ class Grid {
         })
     }
 
+    /**
+     * 检查用户解密的结果，如果成功则提示，如果失败则进行标记
+     */
+    check() {
+        //  从界面获取需要检查的数据
+        const data = this._$container.children()
+            .map((rowIndex, div) => {
+                return $(div).children()
+                    .map((colIndex, span) => parseInt($(span).text()) || 0);
+            })
+            .toArray()
+            .map($data => $data.toArray());
+        //此时的 data 为二维数字，一维是 div ，二维是具体的 span 的值数组
+
+        const checker = new Check(data);
+        if (checker.check()) {
+            return true;
+        }
+
+        //检查不成功，进行标记
+        const marks = checker.matrixMarks;
+        this._$container.children()
+            .each((rowIndex, div) => {
+                $(div).children().each((colIndex, span) => {
+                    const $span = $(span);  //缓存
+                    if ($span.is(".fixed") || marks[rowIndex][colIndex]) {
+                        $span.removeClass("error");
+                    } else {
+                        $span.addClass("error");
+                    }
+                });
+            });
+
+    }
+
+    /**
+     * 重置当前迷盘到初始状态
+     */
+    reset() {
+
+    }
+
+    /**
+     * 清理错误标记
+     */
+    clear() {
+
+    }
+
+    /**
+     * 重建新的迷盘，开始新的一局游戏
+     */
     rebuild() {
         this._$container.empty();
         this.build();

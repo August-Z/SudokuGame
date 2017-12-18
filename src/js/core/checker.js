@@ -36,6 +36,7 @@ function checkArray(array) {
 //输入：matrix，用户完成的数独数据，9 x 9
 //处理：对 matrix 行，列，宫进行检查，并填写 marks
 //输出：检查是否成功，marks 为二维数组，与 matrix 的值一一对应
+
 class Checker {
 
     constructor(matrix) {
@@ -90,7 +91,7 @@ class Checker {
 
     checkBoxes() {
         for (let boxIndex = 0; boxIndex < 9; boxIndex++) {
-            const boxes = Toolkit.box.getBoxCells(matrix, boxIndex);
+            const boxes = Toolkit.box.getBoxCells(this._matrix, boxIndex);
             const marks = checkArray(boxes);
             for (let cellIndex = 0; cellIndex < 9; cellIndex++) {
                 if (!marks[cellIndex]) {
@@ -101,6 +102,8 @@ class Checker {
         }
     }
 }
+
+module.exports = Checker;
 
 // const gen = new Generator();
 // gen.generate();
