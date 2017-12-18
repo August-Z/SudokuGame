@@ -4,17 +4,26 @@ const Toolkit = require("./toolkit.js");
 class Generator {
 
     generate() {
+        while (!this.internalGenerate()) {
+            // TODO
+            // console.log('try again');
+        }
+    }
+
+    internalGenerate() {
         this.matrix = Toolkit.matrix.makeMatrix();
         this.orders = Toolkit.matrix.makeMatrix()
             .map(row => row.map((v, i) => i))
             .map(row => Toolkit.matrix.shuffle(row));
+        
         for (let n = 1; n <= 9; n++) {
-            this.fillNumber(n);
+            if (!this.fillNumber(n)) return false;
         }
+        return true;
     }
 
     fillNumber(n) {
-        this.fillRow(n, 0);
+        return this.fillRow(n, 0);
     }
 
     //递归函数
@@ -55,3 +64,11 @@ class Generator {
 
     }
 }
+
+console.time('core');
+const generator = new Generator();
+generator.generate();
+console.log(generator.matrix);
+console.timeEnd('core');
+
+module.exports = Generator;
