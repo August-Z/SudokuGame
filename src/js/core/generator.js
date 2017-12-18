@@ -1,7 +1,7 @@
 //生成数独解决方案
 const Toolkit = require("./toolkit.js");
 
-module.exports = class Generator {
+class Generator {
 
     generate() {
         while (!this.internalGenerate()) {
@@ -62,4 +62,7 @@ module.exports = class Generator {
         return false;
 
     }
-};
+}
+
+module.exports = Generator;
+

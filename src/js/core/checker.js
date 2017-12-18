@@ -90,7 +90,7 @@ class Checker {
 
     checkBoxes() {
         for (let boxIndex = 0; boxIndex < 9; boxIndex++) {
-            const boxes = Toolkit.box.getBoxCells(matrix,boxIndex);
+            const boxes = Toolkit.box.getBoxCells(matrix, boxIndex);
             const marks = checkArray(boxes);
             for (let cellIndex = 0; cellIndex < 9; cellIndex++) {
                 if (!marks[cellIndex]) {
@@ -101,3 +101,12 @@ class Checker {
         }
     }
 }
+
+// const gen = new Generator();
+// gen.generate();
+// const matrix = gen.matrix;
+//
+// const checker = new Checker(matrix);
+// console.log(checker.check());
+// console.log(checker.matrixMarks);
+

@@ -60,83 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Grid = __webpack_require__(1);
-
-var grid = new Grid($("#container")); //创建实例
-
-grid.build(); //开始构建
-grid.layout(); //调整高度
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-//生成九宫格
-var Toolkit = __webpack_require__(2);
-
-var Grid = function () {
-    function Grid(container) {
-        _classCallCheck(this, Grid);
-
-        this._$container = container;
-    }
-
-    _createClass(Grid, [{
-        key: "build",
-        value: function build() {
-            var matrix = Toolkit.matrix.makeMatrix();
-
-            var rowGroupClasses = ["row_g_top", "row_g_middle", "row_g_bottom"];
-            var colGroupClasses = ["col_g_left", "col_g_center", "col_g_right"];
-
-            var $cells = matrix.map(function (rowValues) {
-                return rowValues.map(function (cellValue, colIndex) {
-                    return $("<span>").addClass(colGroupClasses[colIndex % 3]).text(cellValue);
-                });
-            });
-
-            var $divArray = $cells.map(function ($spanArray, rowIndex) {
-                return $("<div class='row'>").addClass(rowGroupClasses[rowIndex % 3]).append($spanArray);
-            });
-
-            this._$container.append($divArray);
-        }
-    }, {
-        key: "layout",
-        value: function layout() {
-            var width = $("span:first", this._$container).width(); //取得小方块的宽度
-            //适配不同的屏幕产生的小方块宽度，让它的高度与其宽度相等
-            $("span", this._$container).height(width).css({
-                "line-height": width + "px",
-                "font-size": width < 32 ? "" + width / 2 : ""
-            });
-        }
-    }]);
-
-    return Grid;
-}();
-
-module.exports = Grid;
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -188,7 +116,7 @@ var matrixToolkit = {
 
 
     /**
-     * 
+     * 检查制定位置是否可以填写数字 n
      * @param martix
      * @param n
      * @param rowIndex
@@ -196,19 +124,55 @@ var matrixToolkit = {
      * @returns {boolean}
      */
     checkFillable: function checkFillable(martix, n, rowIndex, colIndex) {
+        var row = martix[rowIndex];
+        var column = this.makeRow().map(function (v, i) {
+            return martix[i][colIndex];
+        });
+
+        var _boxToolkit$convertTo = boxToolkit.convertToBoxIndex(rowIndex, colIndex),
+            boxIndex = _boxToolkit$convertTo.boxIndex;
+
+        var box = boxToolkit.getBoxCells(martix, boxIndex);
+
+        for (var i = 0; i < 9; i++) {
+            if (row[i] === n || column[i] === n || box[i] === n) return false;
+        }
         return true;
     }
 };
 
 /**
- *  宫坐标系工具集
+ * 宫坐标系工具集
+ * @type {{getBoxCells(*, *): *, convertToBoxIndex(*, *): *, convertFromBoxIndex(*, *): *}}
  */
 var boxToolkit = {
-    // TODO
+    getBoxCells: function getBoxCells(matrix, boxIndex) {
+        var startRowIndex = Math.floor(boxIndex / 3) * 3;
+        var startColIndex = boxIndex % 3 * 3;
+        var result = [];
+        for (var cellIndex = 0; cellIndex < 9; cellIndex++) {
+            var rowIndex = startRowIndex + Math.floor(cellIndex / 3);
+            var colIndex = startColIndex + cellIndex % 3;
+            // console.log(rowIndex, colIndex);
+            result.push(matrix[rowIndex][colIndex]);
+        }
+        return result;
+    },
+    convertToBoxIndex: function convertToBoxIndex(rowIndex, colIndex) {
+        return {
+            boxIndex: Math.floor(rowIndex / 3) * 3 + Math.floor(colIndex / 3),
+            cellIndex: rowIndex % 3 * 3 + colIndex % 3
+        };
+    },
+    convertFromBoxIndex: function convertFromBoxIndex(boxIndex, cellIndex) {
+        return {
+            rowIndex: Math.floor(boxIndex / 3) * 3 + Math.floor(cellIndex / 3),
+            colIndex: boxIndex % 3 * 3 + cellIndex % 3
+        };
+    }
 };
 
 //工具集
-
 module.exports = function () {
     function toolkit() {
         _classCallCheck(this, toolkit);
@@ -233,6 +197,173 @@ module.exports = function () {
     }]);
 
     return toolkit;
+}();
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Grid = __webpack_require__(2);
+
+var grid = new Grid($("#container")); //创建实例
+
+grid.build(); //开始构建
+grid.layout(); //调整高度
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+//生成九宫格
+var Toolkit = __webpack_require__(0);
+var Generator = __webpack_require__(3);
+
+var Grid = function () {
+    function Grid(container) {
+        _classCallCheck(this, Grid);
+
+        this._$container = container;
+    }
+
+    _createClass(Grid, [{
+        key: "build",
+        value: function build() {
+            var generator = new Generator();
+            generator.generate();
+            var matrix = generator.matrix;
+            console.log(matrix);
+            var rowGroupClasses = ["row_g_top", "row_g_middle", "row_g_bottom"];
+            var colGroupClasses = ["col_g_left", "col_g_center", "col_g_right"];
+
+            var $cells = matrix.map(function (rowValues) {
+                return rowValues.map(function (cellValue, colIndex) {
+                    return $("<span>").addClass(colGroupClasses[colIndex % 3]).text(cellValue);
+                });
+            });
+
+            var $divArray = $cells.map(function ($spanArray, rowIndex) {
+                return $("<div class='row'>").addClass(rowGroupClasses[rowIndex % 3]).append($spanArray);
+            });
+
+            this._$container.append($divArray);
+        }
+    }, {
+        key: "layout",
+        value: function layout() {
+            var width = $("span:first", this._$container).width(); //取得小方块的宽度
+            //适配不同的屏幕产生的小方块宽度，让它的高度与其宽度相等
+            $("span", this._$container).height(width).css({
+                "line-height": width + "px",
+                "font-size": width < 32 ? "" + width / 2 : ""
+            });
+        }
+    }]);
+
+    return Grid;
+}();
+
+module.exports = Grid;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+//生成数独解决方案
+var Toolkit = __webpack_require__(0);
+
+module.exports = function () {
+    function Generator() {
+        _classCallCheck(this, Generator);
+    }
+
+    _createClass(Generator, [{
+        key: "generate",
+        value: function generate() {
+            while (!this.internalGenerate()) {
+                // console.log('try again');
+            }
+        }
+    }, {
+        key: "internalGenerate",
+        value: function internalGenerate() {
+            this.matrix = Toolkit.matrix.makeMatrix();
+            this.orders = Toolkit.matrix.makeMatrix().map(function (row) {
+                return row.map(function (v, i) {
+                    return i;
+                });
+            }).map(function (row) {
+                return Toolkit.matrix.shuffle(row);
+            });
+
+            for (var n = 1; n <= 9; n++) {
+                if (!this.fillNumber(n)) return false;
+            }
+            return true;
+        }
+    }, {
+        key: "fillNumber",
+        value: function fillNumber(n) {
+            return this.fillRow(n, 0);
+        }
+
+        //递归函数
+
+    }, {
+        key: "fillRow",
+        value: function fillRow(n, rowIndex) {
+
+            //填充结束
+            if (rowIndex > 8) {
+                return true;
+            }
+
+            var row = this.matrix[rowIndex]; //行数据
+            var orders = this.orders[rowIndex];
+            for (var i = 0; i < 9; i++) {
+                var colIndex = orders[i];
+
+                //如果这个位置已经有值，跳过
+                if (row[colIndex]) {
+                    continue;
+                }
+
+                //检查这个是否可以填 n
+                if (!Toolkit.matrix.checkFillable(this.matrix, n, rowIndex, colIndex)) {
+                    continue;
+                }
+
+                row[colIndex] = n; //填写
+                //去下一行填写 n ，如果没填进去，就继续寻找当前行下一个
+                if (!this.fillRow(n, rowIndex + 1)) {
+                    row[colIndex] = 0;
+                    continue;
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+    }]);
+
+    return Generator;
 }();
 
 /***/ })

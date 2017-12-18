@@ -1,5 +1,6 @@
 //生成九宫格
 const Toolkit = require("../core/toolkit.js");
+const Generator = require("../core/generator.js");
 
 class Grid {
     constructor(container) {
@@ -7,14 +8,16 @@ class Grid {
     }
 
     build() {
-        const matrix = Toolkit.matrix.makeMatrix();
+        const generator = new Generator();
+        generator.generate();
+        const matrix = generator.matrix;
+        console.log(matrix);
 
         const rowGroupClasses = ["row_g_top", "row_g_middle", "row_g_bottom"];
-        const colGroupClasses = ["col_g_left", "col_g_center", "col_g_right"];
+        const colGroupClasses = ["col_ g_left", "col_g_center", "col_g_right"];
 
-
-        const $cells = matrix.map(rowValues =>
-            rowValues.map((cellValue, colIndex) => {
+        const $cells = matrix.map(rowValues => rowValues
+            .map((cellValue, colIndex) => {
                 return $("<span>")
                     .addClass(colGroupClasses[colIndex % 3])
                     .text(cellValue);
