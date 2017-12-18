@@ -1,6 +1,6 @@
 //生成九宫格
 const Toolkit = require("../core/toolkit.js");
-const Generator = require("../core/generator.js");
+const Sudoku = require("../core/sudoku.js");
 
 class Grid {
     constructor(container) {
@@ -8,10 +8,13 @@ class Grid {
     }
 
     build() {
-        const gen = new Generator();
-        gen.generate();
-        const matrix = gen.matrix;
-        console.log(matrix);
+        // const gen = new Generator();
+        // gen.generate();
+        // const matrix = gen.matrix;
+
+        const suduku = new Sudoku();
+        suduku.make();
+        const matrix = suduku.puzzleMatrix;
 
         const rowGroupClasses = ["row_g_top", "row_g_middle", "row_g_bottom"];
         const colGroupClasses = ["col_ g_left", "col_g_center", "col_g_right"];
@@ -20,6 +23,7 @@ class Grid {
             .map((cellValue, colIndex) => {
                 return $("<span>")
                     .addClass(colGroupClasses[colIndex % 3])
+                    .addClass(cellValue ? "" : "empty")
                     .text(cellValue);
             }));
 
