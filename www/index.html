@@ -7,12 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>数独游戏</title>
     <link rel="stylesheet" href="./css/main.css" type="text/css">
-    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 <body>
 <!--标题-->
 <div class="title">
-    <h1>数独游戏</h1>
+    <h1>
+        数独游戏
+        <select name="level" id="levelSel" title="">
+            <option value="3">青铜</option>
+            <option value="4">白银</option>
+            <option value="5" selected>黄金</option>
+            <option value="6">白金</option>
+            <option value="7">钻石</option>
+        </select>
+    </h1>
 </div>
 
 <!--九宫格-->
@@ -47,6 +55,7 @@
     </div>
 </div>
 
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="js/index.js"></script>
 </body>
 </html>

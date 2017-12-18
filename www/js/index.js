@@ -303,7 +303,7 @@ module.exports = Generator;
 var Grid = __webpack_require__(3);
 var PopupNumbers = __webpack_require__(6);
 
-var grid = new Grid($("#container")); //创建实例
+var grid = new Grid($("#container"), $("#levelSel")); //创建实例
 grid.build(); //开始构建
 grid.layout(); //调整高度
 
@@ -346,10 +346,11 @@ var Sudoku = __webpack_require__(4);
 var Check = __webpack_require__(5);
 
 var Grid = function () {
-    function Grid(container) {
+    function Grid(container, levelSel) {
         _classCallCheck(this, Grid);
 
         this._$container = container;
+        this._$levelSel = levelSel;
     }
 
     _createClass(Grid, [{
@@ -357,7 +358,7 @@ var Grid = function () {
         value: function build() {
 
             var suduku = new Sudoku();
-            suduku.make();
+            suduku.make(this._$levelSel.val());
             // const matrix = suduku.solutionMatrix;
             var matrix = suduku.puzzleMatrix;
 

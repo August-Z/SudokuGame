@@ -5,14 +5,15 @@ const Check = require("../core/checker.js");
 
 class Grid {
 
-    constructor(container) {
+    constructor(container, levelSel) {
         this._$container = container;
+        this._$levelSel = levelSel;
     }
 
     build() {
 
         const suduku = new Sudoku();
-        suduku.make();
+        suduku.make(this._$levelSel.val());
         // const matrix = suduku.solutionMatrix;
         const matrix = suduku.puzzleMatrix;
 

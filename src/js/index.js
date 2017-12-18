@@ -1,7 +1,7 @@
 const Grid = require("./ui/grid.js");
 const PopupNumbers = require("./ui/popupNumbers.js");
 
-const grid = new Grid($("#container")); //创建实例
+const grid = new Grid($("#container"),$("#levelSel")); //创建实例
 grid.build();   //开始构建
 grid.layout();  //调整高度
 
