@@ -23,7 +23,7 @@ class Grid {
             .map((cellValue, colIndex) => {
                 return $("<span>")
                     .addClass(colGroupClasses[colIndex % 3])
-                    .addClass(cellValue ? "" : "empty")
+                    .addClass(cellValue ? "fixed" : "empty")
                     .text(cellValue);
             }));
 
@@ -47,6 +47,18 @@ class Grid {
             });
     }
 
+    bindPopup(popupNumbers) {
+        this._$container.on("click", "span", e => {
+            const $cell = $(e.target);
+            popupNumbers.popup($cell);
+        })
+    }
+
+    rebuild() {
+        this._$container.empty();
+        this.build();
+        this.layout();
+    }
 }
 
 module.exports = Grid;

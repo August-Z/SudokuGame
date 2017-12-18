@@ -163,4 +163,13 @@ class Grid {
     }
 }
 ```
+
+## 处理弹出的操作面板
+
+cell -- (click) --> popup  
+
+popup -- (click) --> n -- (fill) --> cell  
+
+**n为面板所选的数字**
+
   
