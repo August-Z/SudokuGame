@@ -4,6 +4,7 @@ const Sudoku = require("../core/sudoku.js");
 const Check = require("../core/checker.js");
 
 class Grid {
+
     constructor(container) {
         this._$container = container;
     }
@@ -12,6 +13,7 @@ class Grid {
 
         const suduku = new Sudoku();
         suduku.make();
+        // const matrix = suduku.solutionMatrix;
         const matrix = suduku.puzzleMatrix;
 
         const rowGroupClasses = ["row_g_top", "row_g_middle", "row_g_bottom"];
@@ -48,6 +50,9 @@ class Grid {
     bindPopup(popupNumbers) {
         this._$container.on("click", "span", e => {
             const $cell = $(e.target);
+            if ($cell.is(".fixed")) {
+                return;
+            }
             popupNumbers.popup($cell);
         })
     }
@@ -88,17 +93,21 @@ class Grid {
     }
 
     /**
-     * 重置当前迷盘到初始状态
-     */
-    reset() {
-
-    }
-
-    /**
      * 清理错误标记
      */
     clear() {
+        this._$container.find("span.error")
+            .removeClass("error");
+    }
 
+    /**
+     * 重置当前迷盘到初始状态
+     */
+    reset() {
+        this._$container.find("span:not(.fixed)")
+            .removeClass("error mark1 mark2")
+            .addClass("empty")
+            .text(0);
     }
 
     /**

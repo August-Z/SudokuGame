@@ -9,18 +9,20 @@ const popupNumbers = new PopupNumbers($("#popupNumbers"));
 grid.bindPopup(popupNumbers);   //绑定操作
 
 //底部按键
-$("#check").on("click",e => {
-    grid.check();
+$("#check").on("click", e => {
+   if( grid.check()){
+       alert("ok");
+   }
 });
 
-$("#reset").on("click",e => {
-    grid.reset();
-});
-
-$("#clear").on("click",e => {
+$("#clear").on("click", e => {
     grid.clear();
 });
 
-$("#rebuild").on("click",e => {
+$("#reset").on("click", e => {
+    grid.reset();
+});
+
+$("#rebuild").on("click", e => {
     grid.rebuild();
 });

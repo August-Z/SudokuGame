@@ -312,15 +312,17 @@ grid.bindPopup(popupNumbers); //绑定操作
 
 //底部按键
 $("#check").on("click", function (e) {
-    grid.check();
-});
-
-$("#reset").on("click", function (e) {
-    grid.reset();
+    if (grid.check()) {
+        alert("ok");
+    }
 });
 
 $("#clear").on("click", function (e) {
     grid.clear();
+});
+
+$("#reset").on("click", function (e) {
+    grid.reset();
 });
 
 $("#rebuild").on("click", function (e) {
@@ -356,6 +358,7 @@ var Grid = function () {
 
             var suduku = new Sudoku();
             suduku.make();
+            // const matrix = suduku.solutionMatrix;
             var matrix = suduku.puzzleMatrix;
 
             var rowGroupClasses = ["row_g_top", "row_g_middle", "row_g_bottom"];
@@ -388,6 +391,9 @@ var Grid = function () {
         value: function bindPopup(popupNumbers) {
             this._$container.on("click", "span", function (e) {
                 var $cell = $(e.target);
+                if ($cell.is(".fixed")) {
+                    return;
+                }
                 popupNumbers.popup($cell);
             });
         }
@@ -429,20 +435,24 @@ var Grid = function () {
         }
 
         /**
-         * 重置当前迷盘到初始状态
-         */
-
-    }, {
-        key: "reset",
-        value: function reset() {}
-
-        /**
          * 清理错误标记
          */
 
     }, {
         key: "clear",
-        value: function clear() {}
+        value: function clear() {
+            this._$container.find("span.error").removeClass("error");
+        }
+
+        /**
+         * 重置当前迷盘到初始状态
+         */
+
+    }, {
+        key: "reset",
+        value: function reset() {
+            this._$container.find("span:not(.fixed)").removeClass("error mark1 mark2").addClass("empty").text(0);
+        }
 
         /**
          * 重建新的迷盘，开始新的一局游戏
