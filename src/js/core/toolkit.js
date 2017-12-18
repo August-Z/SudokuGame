@@ -46,9 +46,8 @@ const matrixToolkit = {
         for (let i = 0; i < 9; i++) {
             if (row[i] === n
                 || column[i] === n
-                || box[i] === n) {
+                || box[i] === n)
                 return false;
-            }
         }
         return true;
     }
@@ -68,6 +67,7 @@ const boxToolkit = {
         for (let cellIndex = 0; cellIndex < 9; cellIndex++) {
             const rowIndex = startRowIndex + Math.floor(cellIndex / 3);
             const colIndex = startColIndex + cellIndex % 3;
+            // console.log(rowIndex, colIndex);
             result.push(matrix[rowIndex][colIndex]);
         }
         return result;

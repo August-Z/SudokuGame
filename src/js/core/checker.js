@@ -1,5 +1,6 @@
 //检查数独解决方案
 const Toolkit = require("./toolkit.js");
+const Generator = require("./generator.js");
 
 function checkArray(array) {
     const len = array.length;
@@ -64,13 +65,11 @@ class Checker {
         for (let rowIndex = 0; rowIndex < 9; rowIndex++) {
             const row = this._matrix[rowIndex];
             const marks = checkArray(row);
-
             for (let colIndex = 0; colIndex < marks.length; colIndex++) {
                 if (!marks[colIndex]) {
                     this._matrixMarks[rowIndex][colIndex] = false;
                 }
             }
-
         }
     }
 
@@ -91,10 +90,14 @@ class Checker {
 
     checkBoxes() {
         for (let boxIndex = 0; boxIndex < 9; boxIndex++) {
-            const boxes = Toolkit.box.getBoxCells(boxIndex);
+            const boxes = Toolkit.box.getBoxCells(matrix,boxIndex);
             const marks = checkArray(boxes);
-            // TODO 
+            for (let cellIndex = 0; cellIndex < 9; cellIndex++) {
+                if (!marks[cellIndex]) {
+                    const {rowIndex, colIndex} = Toolkit.box.convertFromBoxIndex(boxIndex, cellIndex);
+                    this._matrixMarks[rowIndex][colIndex] = false;
+                }
+            }
         }
     }
-
 }
