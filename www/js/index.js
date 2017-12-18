@@ -238,12 +238,13 @@ var Grid = function () {
     _createClass(Grid, [{
         key: "build",
         value: function build() {
-            var generator = new Generator();
-            generator.generate();
-            var matrix = generator.matrix;
+            var gen = new Generator();
+            gen.generate();
+            var matrix = gen.matrix;
             console.log(matrix);
+
             var rowGroupClasses = ["row_g_top", "row_g_middle", "row_g_bottom"];
-            var colGroupClasses = ["col_g_left", "col_g_center", "col_g_right"];
+            var colGroupClasses = ["col_ g_left", "col_g_center", "col_g_right"];
 
             var $cells = matrix.map(function (rowValues) {
                 return rowValues.map(function (cellValue, colIndex) {
@@ -288,7 +289,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //生成数独解决方案
 var Toolkit = __webpack_require__(0);
 
-module.exports = function () {
+var Generator = function () {
     function Generator() {
         _classCallCheck(this, Generator);
     }
@@ -365,6 +366,8 @@ module.exports = function () {
 
     return Generator;
 }();
+
+module.exports = Generator;
 
 /***/ })
 /******/ ]);

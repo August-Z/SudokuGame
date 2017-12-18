@@ -106,6 +106,8 @@ class Checker {
 // gen.generate();
 // const matrix = gen.matrix;
 //
+// console.log(matrix);
+
 // const checker = new Checker(matrix);
 // console.log(checker.check());
 // console.log(checker.matrixMarks);

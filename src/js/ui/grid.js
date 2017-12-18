@@ -8,9 +8,9 @@ class Grid {
     }
 
     build() {
-        const generator = new Generator();
-        generator.generate();
-        const matrix = generator.matrix;
+        const gen = new Generator();
+        gen.generate();
+        const matrix = gen.matrix;
         console.log(matrix);
 
         const rowGroupClasses = ["row_g_top", "row_g_middle", "row_g_bottom"];
@@ -46,3 +46,5 @@ class Grid {
 }
 
 module.exports = Grid;
+
+
