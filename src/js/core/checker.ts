@@ -1,9 +1,9 @@
 //检查数独解决方案
 import Toolkit from "./toolkit";
 
-function checkArray(array: any) {
+function checkArray(array: number[]): boolean[] {
     const len = array.length;
-    const marks = new Array(len);   //标记数组
+    const marks: boolean[] = new Array(len);   //标记数组
     marks.fill(true);   //初始化都为 true
 
     for (let i = 0; i < len - 1; i++) {
@@ -37,24 +37,24 @@ function checkArray(array: any) {
 
 export class Checker {
 
-    private _matrix: any;
-    private _matrixMarks: any;
+    private _matrix: number[][];
+    private _matrixMarks: boolean[][];
     private _success: boolean = false;
 
-    constructor(matrix: any) {
+    constructor(matrix: number[][]) {
         this._matrix = matrix;
         this._matrixMarks = Toolkit.matrix.makeMatrix(true);
     }
 
-    get matrixMarks() {
+    get matrixMarks(): boolean[][] {
         return this._matrixMarks;
     }
 
-    get isSuccess() {
+    get isSuccess(): boolean {
         return this._success;
     }
 
-    check() {
+    check(): boolean {
         this.checkRows();
         this.checkCols();
         this.checkBoxes();
@@ -64,7 +64,7 @@ export class Checker {
         return this._success;
     }
 
-    checkRows() {
+    private checkRows() {
         for (let rowIndex = 0; rowIndex < 9; rowIndex++) {
             const row = this._matrix[rowIndex];
             const marks = checkArray(row);
@@ -76,7 +76,7 @@ export class Checker {
         }
     }
 
-    checkCols() {
+    private checkCols() {
         for (let colIndex = 0; colIndex < 9; colIndex++) {
             const cols = [];
             for (let rowIndex = 0; rowIndex < 9; rowIndex++) {
@@ -91,7 +91,7 @@ export class Checker {
         }
     }
 
-    checkBoxes() {
+    private checkBoxes() {
         for (let boxIndex = 0; boxIndex < 9; boxIndex++) {
             const boxes = Toolkit.box.getBoxCells(this._matrix, boxIndex);
             const marks = checkArray(boxes);
