@@ -1,11 +1,13 @@
 //生成九宫格
-const Toolkit = require("../core/toolkit.js");
-const Sudoku = require("../core/sudoku.js");
-const Check = require("../core/checker.js");
+import Sudoku from "../core/sudoku";
+import Check from "../core/checker";
 
-class Grid {
+export class Grid {
 
-    constructor(container, levelSel) {
+    private _$container: any;
+    private _$levelSel: any;
+
+    constructor(container: any, levelSel: any) {
         this._$container = container;
         this._$levelSel = levelSel;
     }
@@ -20,15 +22,15 @@ class Grid {
         const rowGroupClasses = ["row_g_top", "row_g_middle", "row_g_bottom"];
         const colGroupClasses = ["col_ g_left", "col_g_center", "col_g_right"];
 
-        const $cells = matrix.map(rowValues => rowValues
-            .map((cellValue, colIndex) => {
+        const $cells = matrix.map((rowValues: any) => rowValues
+            .map((cellValue: any, colIndex: any) => {
                 return $("<span>")
                     .addClass(colGroupClasses[colIndex % 3])
                     .addClass(cellValue ? "fixed" : "empty")
                     .text(cellValue);
             }));
 
-        const $divArray = $cells.map(($spanArray, rowIndex) => {
+        const $divArray = $cells.map(($spanArray: any, rowIndex: any) => {
             return $("<div class='row'>")
                 .addClass(rowGroupClasses[rowIndex % 3])
                 .append($spanArray);
@@ -39,7 +41,7 @@ class Grid {
     }
 
     layout() {
-        const width = $("span:first", this._$container).width(); //取得小方块的宽度
+        const width: any = $("span:first", this._$container).width(); //取得小方块的宽度
         //适配不同的屏幕产生的小方块宽度，让它的高度与其宽度相等
         $("span", this._$container).height(width)
             .css({
@@ -48,8 +50,8 @@ class Grid {
             });
     }
 
-    bindPopup(popupNumbers) {
-        this._$container.on("click", "span", e => {
+    bindPopup(popupNumbers: any) {
+        this._$container.on("click", "span", (e:any) => {
             const $cell = $(e.target);
             if ($cell.is(".fixed")) {
                 return;
@@ -64,12 +66,12 @@ class Grid {
     check() {
         //  从界面获取需要检查的数据
         const data = this._$container.children()
-            .map((rowIndex, div) => {
+            .map((rowIndex: any, div: any) => {
                 return $(div).children()
                     .map((colIndex, span) => parseInt($(span).text()) || 0);
             })
             .toArray()
-            .map($data => $data.toArray());
+            .map(($data: any) => $data.toArray());
         //此时的 data 为二维数字，一维是 div ，二维是具体的 span 的值数组
 
         const checker = new Check(data);
@@ -80,7 +82,7 @@ class Grid {
         //检查不成功，进行标记
         const marks = checker.matrixMarks;
         this._$container.children()
-            .each((rowIndex, div) => {
+            .each((rowIndex: any, div: any) => {
                 $(div).children().each((colIndex, span) => {
                     const $span = $(span);  //缓存
                     if ($span.is(".fixed") || marks[rowIndex][colIndex]) {
@@ -121,6 +123,6 @@ class Grid {
     }
 }
 
-module.exports = Grid;
+export default Grid;
 
 

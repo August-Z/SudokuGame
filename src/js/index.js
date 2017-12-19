@@ -1,23 +1,24 @@
 "use strict";
-var Grid = require("./ui/grid.js");
-var PopupNumbers = require("./ui/popupNumbers.js");
-var grid = new Grid($("#container"), $("#levelSel")); //创建实例
+Object.defineProperty(exports, "__esModule", { value: true });
+const grid_1 = require("./ui/grid");
+const popupNumbers_1 = require("./ui/popupNumbers");
+const grid = new grid_1.default($("#container"), $("#levelSel")); //创建实例
 grid.build(); //开始构建
 grid.layout(); //调整高度
-var popupNumbers = new PopupNumbers($("#popupNumbers"));
+const popupNumbers = new popupNumbers_1.default($("#popupNumbers"));
 grid.bindPopup(popupNumbers); //绑定操作
 //底部按键
-$("#check").on("click", function (e) {
+$("#check").on("click", e => {
     if (grid.check()) {
         alert("ok");
     }
 });
-$("#clear").on("click", function (e) {
+$("#clear").on("click", e => {
     grid.clear();
 });
-$("#reset").on("click", function (e) {
+$("#reset").on("click", e => {
     grid.reset();
 });
-$("#rebuild").on("click", function (e) {
+$("#rebuild").on("click", e => {
     grid.rebuild();
 });

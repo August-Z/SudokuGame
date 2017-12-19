@@ -1,12 +1,12 @@
 "use strict";
 //处理弹出的操作面板
-var PopupNumbers = /** @class */ (function () {
-    function PopupNumbers($panel) {
-        var _this = this;
+Object.defineProperty(exports, "__esModule", { value: true });
+class PopupNumbers {
+    constructor($panel) {
         this._$panel = $panel.hide().removeClass("hidden");
-        this._$panel.on("click", "span", function (e) {
-            var $cell = _this._$targetCell;
-            var $span = $(e.target);
+        this._$panel.on("click", "span", (e) => {
+            const $cell = this._$targetCell;
+            const $span = $(e.target);
             if ($span.hasClass("mark1")) {
                 if ($cell.hasClass("mark1")) {
                     $cell.removeClass("mark1");
@@ -35,20 +35,20 @@ var PopupNumbers = /** @class */ (function () {
                 $cell.removeClass("empty")
                     .text($span.text());
             }
-            _this.hide();
+            this.hide();
         });
     }
-    PopupNumbers.prototype.popup = function ($cell) {
+    popup($cell) {
         this._$targetCell = $cell;
-        var _a = $cell.position(), left = _a.left, top = _a.top;
+        const { left, top } = $cell.position();
         this._$panel.css({
-            left: left + "px",
-            top: top + "px"
+            left: `${left}px`,
+            top: `${top}px`
         }).show();
-    };
-    PopupNumbers.prototype.hide = function () {
+    }
+    hide() {
         this._$panel.hide();
-    };
-    return PopupNumbers;
-}());
-module.exports = PopupNumbers;
+    }
+}
+exports.PopupNumbers = PopupNumbers;
+exports.default = PopupNumbers;

@@ -1,7 +1,11 @@
 //生成数独游戏
-const Generator = require("./generator.js");
+import Generator from "./generator";
 
-class Sudoku {
+export class Sudoku {
+
+    solutionMatrix:any;
+    puzzleMatrix:any;
+
     constructor() {
         //生成完成的解决方案
         const gen = new Generator();
@@ -12,10 +16,10 @@ class Sudoku {
     make(level = 5) {
         // const shouldRid = Math.random() * 9 < level;
         //生成迷盘
-        this.puzzleMatrix = this.solutionMatrix.map(row => {
-            return row.map(cell => Math.random() * 9 < level ? 0 : cell);
+        this.puzzleMatrix = this.solutionMatrix.map((row:any) => {
+            return row.map((cell:any) => Math.random() * 9 < level ? 0 : cell);
         })
     }
 }
 
-module.exports = Sudoku;
+export default Sudoku;

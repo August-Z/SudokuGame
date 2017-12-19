@@ -1,8 +1,7 @@
 //检查数独解决方案
-const Toolkit = require("./toolkit.js");
-const Generator = require("./generator.js");
+import Toolkit from "./toolkit";
 
-function checkArray(array) {
+function checkArray(array: any) {
     const len = array.length;
     const marks = new Array(len);   //标记数组
     marks.fill(true);   //初始化都为 true
@@ -32,14 +31,17 @@ function checkArray(array) {
     return marks;
 }
 
-
 //输入：matrix，用户完成的数独数据，9 x 9
 //处理：对 matrix 行，列，宫进行检查，并填写 marks
 //输出：检查是否成功，marks 为二维数组，与 matrix 的值一一对应
 
-class Checker {
+export class Checker {
 
-    constructor(matrix) {
+    private _matrix: any;
+    private _matrixMarks: any;
+    private _success: boolean = false;
+
+    constructor(matrix: any) {
         this._matrix = matrix;
         this._matrixMarks = Toolkit.matrix.makeMatrix(true);
     }
@@ -58,7 +60,7 @@ class Checker {
         this.checkBoxes();
 
         //检查是否成功
-        this._success = this._matrixMarks.every(row => row.every(mark => mark));
+        this._success = this._matrixMarks.every((row: any) => row.every((mark: any) => mark));
         return this._success;
     }
 
@@ -103,7 +105,7 @@ class Checker {
     }
 }
 
-module.exports = Checker;
+export default Checker;
 
 // const gen = new Generator();
 // gen.generate();

@@ -1,7 +1,10 @@
 //生成数独解决方案
-const Toolkit = require("./toolkit.js");
+import Toolkit from "./toolkit";
 
-class Generator {
+export class Generator {
+
+    matrix: any;
+    orders: any;
 
     generate() {
         while (!this.internalGenerate()) {
@@ -12,8 +15,8 @@ class Generator {
     internalGenerate() {
         this.matrix = Toolkit.matrix.makeMatrix();
         this.orders = Toolkit.matrix.makeMatrix()
-            .map(row => row.map((v, i) => i))
-            .map(row => Toolkit.matrix.shuffle(row));
+            .map((row: any) => row.map((v: any, i: any) => i))
+            .map((row: any) => Toolkit.matrix.shuffle(row));
 
         for (let n = 1; n <= 9; n++) {
             if (!this.fillNumber(n)) return false;
@@ -21,12 +24,12 @@ class Generator {
         return true;
     }
 
-    fillNumber(n) {
+    fillNumber(n: number) {
         return this.fillRow(n, 0);
     }
 
     //递归函数
-    fillRow(n, rowIndex) {
+    fillRow(n: number, rowIndex: number) {
 
         //填充结束
         if (rowIndex > 8) {
@@ -64,5 +67,5 @@ class Generator {
     }
 }
 
-module.exports = Generator;
+export default Generator;
 

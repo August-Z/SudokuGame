@@ -1,11 +1,14 @@
 //处理弹出的操作面板
 
-class PopupNumbers {
-    constructor($panel) {
+export class PopupNumbers {
 
+    private _$panel: any;
+    private _$targetCell: any;
+
+    constructor($panel: any) {
         this._$panel = $panel.hide().removeClass("hidden");
 
-        this._$panel.on("click", "span", e => {
+        this._$panel.on("click", "span", (e: any) => {
             const $cell = this._$targetCell;
             const $span = $(e.target);
 
@@ -39,7 +42,7 @@ class PopupNumbers {
 
     }
 
-    popup($cell) {
+    popup($cell:any) {
         this._$targetCell = $cell;
         const {left, top} = $cell.position();
         this._$panel.css({
@@ -53,4 +56,4 @@ class PopupNumbers {
     }
 }
 
-module.exports = PopupNumbers;
+export default PopupNumbers;

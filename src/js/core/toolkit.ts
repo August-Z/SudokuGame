@@ -4,13 +4,13 @@
  */
 const matrixToolkit = {
 
-    makeRow(v = 0) {
+    makeRow(v: any = 0) {
         const array = new Array(9);
         array.fill(v);
         return array;
     },
 
-    makeMatrix(v = 0) {
+    makeMatrix(v: any = 0) {
         //使用映射来制造各不相同的 Array , 第二个参数代表了 map() 函数的参数(简写)
         return Array.from({length: 9}, () => this.makeRow(v));
     },
@@ -19,7 +19,7 @@ const matrixToolkit = {
      * Fisher-Yates 洗牌算法
      * @param array 需要进行洗牌的数据
      */
-    shuffle(array) {
+    shuffle(array: any) {
         const len = array.length; //数组的长度
         const endIndex = len - 2; //因为最后一个元素不需要交换,省略1位,故不是 len - 1
         for (let i = 0; i <= endIndex; i++) {
@@ -37,7 +37,7 @@ const matrixToolkit = {
      * @param colIndex
      * @returns {boolean}
      */
-    checkFillable(martix, n, rowIndex, colIndex) {
+    checkFillable(martix: any, n: any, rowIndex: number, colIndex: number) {
         const row = martix[rowIndex];
         const column = this.makeRow().map((v, i) => martix[i][colIndex]);
         const {boxIndex} = boxToolkit.convertToBoxIndex(rowIndex, colIndex);
@@ -60,7 +60,7 @@ const matrixToolkit = {
  */
 const boxToolkit = {
 
-    getBoxCells(matrix, boxIndex) {
+    getBoxCells(matrix: any, boxIndex: number) {
         const startRowIndex = Math.floor(boxIndex / 3) * 3;
         const startColIndex = boxIndex % 3 * 3;
         const result = [];
@@ -73,14 +73,14 @@ const boxToolkit = {
         return result;
     },
 
-    convertToBoxIndex(rowIndex, colIndex) {
+    convertToBoxIndex(rowIndex: number, colIndex: number) {
         return {
             boxIndex: Math.floor(rowIndex / 3) * 3 + Math.floor(colIndex / 3),
             cellIndex: rowIndex % 3 * 3 + colIndex % 3
         }
     },
 
-    convertFromBoxIndex(boxIndex, cellIndex) {
+    convertFromBoxIndex(boxIndex: number, cellIndex: number) {
         return {
             rowIndex: Math.floor(boxIndex / 3) * 3 + Math.floor(cellIndex / 3),
             colIndex: boxIndex % 3 * 3 + cellIndex % 3
@@ -90,7 +90,7 @@ const boxToolkit = {
 
 
 //工具集
-module.exports = class toolkit {
+export class Toolkit {
 
     //矩阵与数组相关的工具
     static get matrix() {
@@ -102,6 +102,8 @@ module.exports = class toolkit {
         return boxToolkit;
     }
 
-};
+}
+
+export default Toolkit;
 
 
