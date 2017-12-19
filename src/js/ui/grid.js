@@ -1,15 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 //生成九宫格
-const sudoku_1 = require("../core/sudoku");
-const checker_1 = require("../core/checker");
-class Grid {
+import Sudoku from "../core/sudoku";
+import Check from "../core/checker";
+export class Grid {
     constructor(container, levelSel) {
         this._$container = container;
         this._$levelSel = levelSel;
     }
     build() {
-        const suduku = new sudoku_1.default();
+        const suduku = new Sudoku();
         suduku.make(this._$levelSel.val());
         // const matrix = suduku.solutionMatrix;
         const matrix = suduku.puzzleMatrix;
@@ -53,14 +51,13 @@ class Grid {
     check() {
         //  从界面获取需要检查的数据
         const data = this._$container.children()
-            .map((rowIndex, div) => {
-            return $(div).children()
-                .map((colIndex, span) => parseInt($(span).text()) || 0);
-        })
             .toArray()
-            .map(($data) => $data.toArray());
-        //此时的 data 为二维数字，一维是 div ，二维是具体的 span 的值数组
-        const checker = new checker_1.default(data);
+            .map((div) => {
+            return $(div).children()
+                .toArray()
+                .map(span => parseInt($(span).text(), 10) || 0);
+        });
+        const checker = new Check(data);
         if (checker.check()) {
             return true;
         }
@@ -104,5 +101,4 @@ class Grid {
         this.layout();
     }
 }
-exports.Grid = Grid;
-exports.default = Grid;
+export default Grid;

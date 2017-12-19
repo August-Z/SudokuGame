@@ -1,13 +1,14 @@
 //生成九宫格
 import Sudoku from "../core/sudoku";
 import Check from "../core/checker";
+import PopupNumbers from "./popupNumbers";
 
 export class Grid {
 
-    private _$container: any;
-    private _$levelSel: any;
+    private _$container: JQuery;
+    private _$levelSel: JQuery;
 
-    constructor(container: any, levelSel: any) {
+    constructor(container: JQuery, levelSel: JQuery) {
         this._$container = container;
         this._$levelSel = levelSel;
     }
@@ -15,7 +16,7 @@ export class Grid {
     build() {
 
         const suduku = new Sudoku();
-        suduku.make(this._$levelSel.val());
+        suduku.make(<number>this._$levelSel.val());
         // const matrix = suduku.solutionMatrix;
         const matrix = suduku.puzzleMatrix;
 
@@ -50,8 +51,8 @@ export class Grid {
             });
     }
 
-    bindPopup(popupNumbers: any) {
-        this._$container.on("click", "span", (e:any) => {
+    bindPopup(popupNumbers: PopupNumbers) {
+        this._$container.on("click", "span", (e: any) => {
             const $cell = $(e.target);
             if ($cell.is(".fixed")) {
                 return;
@@ -66,13 +67,12 @@ export class Grid {
     check() {
         //  从界面获取需要检查的数据
         const data = this._$container.children()
-            .map((rowIndex: any, div: any) => {
-                return $(div).children()
-                    .map((colIndex, span) => parseInt($(span).text()) || 0);
-            })
             .toArray()
-            .map(($data: any) => $data.toArray());
-        //此时的 data 为二维数字，一维是 div ，二维是具体的 span 的值数组
+            .map((div: HTMLElement): number[] => {
+                return $(div).children()
+                    .toArray()
+                    .map(span => parseInt($(span).text(), 10) || 0);
+            });
 
         const checker = new Check(data);
         if (checker.check()) {

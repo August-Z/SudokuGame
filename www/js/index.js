@@ -70,74 +70,14 @@
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * 矩阵工具集
- * @type {{makeRow(*=): *, makeMatrix(*=): *, shuffle(*): *}}
- */
-var matrixToolkit = {
-    makeRow: function makeRow() {
-        var v = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-        var array = new Array(9);
-        array.fill(v);
-        return array;
-    },
-    makeMatrix: function makeMatrix() {
-        var _this = this;
-
-        var v = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-        //使用映射来制造各不相同的 Array , 第二个参数代表了 map() 函数的参数(简写)
-        return Array.from({ length: 9 }, function () {
-            return _this.makeRow(v);
-        });
-    },
-
-    /**
-     * Fisher-Yates 洗牌算法
-     * @param array 需要进行洗牌的数据
-     */
-    shuffle: function shuffle(array) {
-        var len = array.length; //数组的长度
-        var endIndex = len - 2; //因为最后一个元素不需要交换,省略1位,故不是 len - 1
-        for (var i = 0; i <= endIndex; i++) {
-            var j = i + Math.floor(Math.random() * (len - i));
-            var _ref = [array[j], array[i]];
-            array[i] = _ref[0];
-            array[j] = _ref[1];
-        }
-        return array;
-    },
-
-    /**
-     * 检查制定位置是否可以填写数字 n
-     * @param martix
-     * @param n
-     * @param rowIndex
-     * @param colIndex
-     * @returns {boolean}
-     */
-    checkFillable: function checkFillable(martix, n, rowIndex, colIndex) {
-        var row = martix[rowIndex];
-        var column = this.makeRow().map(function (v, i) {
-            return martix[i][colIndex];
-        });
-
-        var _boxToolkit$convertTo = boxToolkit.convertToBoxIndex(rowIndex, colIndex),
-            boxIndex = _boxToolkit$convertTo.boxIndex;
-
-        var box = boxToolkit.getBoxCells(martix, boxIndex);
-        for (var i = 0; i < 9; i++) {
-            if (row[i] === n || column[i] === n || box[i] === n) return false;
-        }
-        return true;
-    }
-};
 /**
  * 宫坐标系工具集
  * @type {{getBoxCells(*, *): *, convertToBoxIndex(*, *): *, convertFromBoxIndex(*, *): *}}
@@ -168,9 +108,91 @@ var boxToolkit = {
         };
     }
 };
+/**
+ * 矩阵工具集
+ * @type {{makeRow(*=): *, makeMatrix(*=): *, shuffle(*): *}}
+ */
+
+var MatrixToolkit = function () {
+    function MatrixToolkit() {
+        _classCallCheck(this, MatrixToolkit);
+    }
+
+    _createClass(MatrixToolkit, null, [{
+        key: "makeRow",
+        value: function makeRow() {
+            var v = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+            var array = new Array(9);
+            array.fill(v);
+            return array;
+        }
+    }, {
+        key: "makeMatrix",
+        value: function makeMatrix() {
+            var _this = this;
+
+            var v = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+            //使用映射来制造各不相同的 Array , 第二个参数代表了 map() 函数的参数(简写)
+            return Array.from({ length: 9 }, function () {
+                return _this.makeRow(v);
+            });
+        }
+        /**
+         * Fisher-Yates 洗牌算法
+         * @param array 需要进行洗牌的数据
+         */
+
+    }, {
+        key: "shuffle",
+        value: function shuffle(array) {
+            var len = array.length; //数组的长度
+            var endIndex = len - 2; //因为最后一个元素不需要交换,省略1位,故不是 len - 1
+            for (var i = 0; i <= endIndex; i++) {
+                var j = i + Math.floor(Math.random() * (len - i));
+                var _ref = [array[j], array[i]];
+                array[i] = _ref[0];
+                array[j] = _ref[1];
+            }
+            return array;
+        }
+        /**
+         * 检查制定位置是否可以填写数字 n
+         * @param martix
+         * @param n
+         * @param rowIndex
+         * @param colIndex
+         * @returns {boolean}
+         */
+
+    }, {
+        key: "checkFillable",
+        value: function checkFillable(martix, n, rowIndex, colIndex) {
+            var row = martix[rowIndex];
+            var column = this.makeRow().map(function (v, i) {
+                return martix[i][colIndex];
+            });
+
+            var _boxToolkit$convertTo = boxToolkit.convertToBoxIndex(rowIndex, colIndex),
+                boxIndex = _boxToolkit$convertTo.boxIndex;
+
+            var box = boxToolkit.getBoxCells(martix, boxIndex);
+            for (var i = 0; i < 9; i++) {
+                if (row[i] === n || column[i] === n || box[i] === n) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }]);
+
+    return MatrixToolkit;
+}();
 //工具集
 
-var Toolkit = function () {
+
+var Toolkit = exports.Toolkit = function () {
     function Toolkit() {
         _classCallCheck(this, Toolkit);
     }
@@ -180,7 +202,7 @@ var Toolkit = function () {
 
         //矩阵与数组相关的工具
         get: function get() {
-            return matrixToolkit;
+            return MatrixToolkit;
         }
         //宫坐标系相关的工具
 
@@ -194,7 +216,6 @@ var Toolkit = function () {
     return Toolkit;
 }();
 
-exports.Toolkit = Toolkit;
 exports.default = Toolkit;
 
 /***/ }),
@@ -204,13 +225,20 @@ exports.default = Toolkit;
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", { value: true });
-var grid_1 = __webpack_require__(2);
-var popupNumbers_1 = __webpack_require__(6);
-var grid = new grid_1.default($("#container"), $("#levelSel")); //创建实例
+var _grid = __webpack_require__(2);
+
+var _grid2 = _interopRequireDefault(_grid);
+
+var _popupNumbers = __webpack_require__(6);
+
+var _popupNumbers2 = _interopRequireDefault(_popupNumbers);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var grid = new _grid2.default($("#container"), $("#levelSel")); //创建实例
 grid.build(); //开始构建
 grid.layout(); //调整高度
-var popupNumbers = new popupNumbers_1.default($("#popupNumbers"));
+var popupNumbers = new _popupNumbers2.default($("#popupNumbers"));
 grid.bindPopup(popupNumbers); //绑定操作
 //底部按键
 $("#check").on("click", function (e) {
@@ -235,16 +263,27 @@ $("#rebuild").on("click", function (e) {
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Grid = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //生成九宫格
+
+
+var _sudoku = __webpack_require__(3);
+
+var _sudoku2 = _interopRequireDefault(_sudoku);
+
+var _checker = __webpack_require__(5);
+
+var _checker2 = _interopRequireDefault(_checker);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-Object.defineProperty(exports, "__esModule", { value: true });
-//生成九宫格
-var sudoku_1 = __webpack_require__(3);
-var checker_1 = __webpack_require__(5);
-
-var Grid = function () {
+var Grid = exports.Grid = function () {
     function Grid(container, levelSel) {
         _classCallCheck(this, Grid);
 
@@ -255,7 +294,7 @@ var Grid = function () {
     _createClass(Grid, [{
         key: "build",
         value: function build() {
-            var suduku = new sudoku_1.default();
+            var suduku = new _sudoku2.default();
             suduku.make(this._$levelSel.val());
             // const matrix = suduku.solutionMatrix;
             var matrix = suduku.puzzleMatrix;
@@ -300,15 +339,12 @@ var Grid = function () {
         key: "check",
         value: function check() {
             //  从界面获取需要检查的数据
-            var data = this._$container.children().map(function (rowIndex, div) {
-                return $(div).children().map(function (colIndex, span) {
-                    return parseInt($(span).text()) || 0;
+            var data = this._$container.children().toArray().map(function (div) {
+                return $(div).children().toArray().map(function (span) {
+                    return parseInt($(span).text(), 10) || 0;
                 });
-            }).toArray().map(function ($data) {
-                return $data.toArray();
             });
-            //此时的 data 为二维数字，一维是 div ，二维是具体的 span 的值数组
-            var checker = new checker_1.default(data);
+            var checker = new _checker2.default(data);
             if (checker.check()) {
                 return true;
             }
@@ -359,7 +395,6 @@ var Grid = function () {
     return Grid;
 }();
 
-exports.Grid = Grid;
 exports.default = Grid;
 
 /***/ }),
@@ -369,20 +404,28 @@ exports.default = Grid;
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Sudoku = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //生成数独游戏
+
+
+var _generator = __webpack_require__(4);
+
+var _generator2 = _interopRequireDefault(_generator);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-Object.defineProperty(exports, "__esModule", { value: true });
-//生成数独游戏
-var generator_1 = __webpack_require__(4);
-
-var Sudoku = function () {
+var Sudoku = exports.Sudoku = function () {
     function Sudoku() {
         _classCallCheck(this, Sudoku);
 
         //生成完成的解决方案
-        var gen = new generator_1.default();
+        var gen = new _generator2.default();
         gen.generate();
         this.solutionMatrix = gen.matrix;
     }
@@ -405,7 +448,6 @@ var Sudoku = function () {
     return Sudoku;
 }();
 
-exports.Sudoku = Sudoku;
 exports.default = Sudoku;
 
 /***/ }),
@@ -415,15 +457,23 @@ exports.default = Sudoku;
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Generator = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //生成数独解决方案
+
+
+var _toolkit = __webpack_require__(0);
+
+var _toolkit2 = _interopRequireDefault(_toolkit);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-Object.defineProperty(exports, "__esModule", { value: true });
-//生成数独解决方案
-var toolkit_1 = __webpack_require__(0);
-
-var Generator = function () {
+var Generator = exports.Generator = function () {
     function Generator() {
         _classCallCheck(this, Generator);
     }
@@ -438,13 +488,13 @@ var Generator = function () {
     }, {
         key: "internalGenerate",
         value: function internalGenerate() {
-            this.matrix = toolkit_1.default.matrix.makeMatrix();
-            this.orders = toolkit_1.default.matrix.makeMatrix().map(function (row) {
+            this.matrix = _toolkit2.default.matrix.makeMatrix();
+            this.orders = _toolkit2.default.matrix.makeMatrix().map(function (row) {
                 return row.map(function (v, i) {
                     return i;
                 });
             }).map(function (row) {
-                return toolkit_1.default.matrix.shuffle(row);
+                return _toolkit2.default.matrix.shuffle(row);
             });
             for (var n = 1; n <= 9; n++) {
                 if (!this.fillNumber(n)) return false;
@@ -474,7 +524,7 @@ var Generator = function () {
                     continue;
                 }
                 //检查这个是否可以填 n
-                if (!toolkit_1.default.matrix.checkFillable(this.matrix, n, rowIndex, colIndex)) {
+                if (!_toolkit2.default.matrix.checkFillable(this.matrix, n, rowIndex, colIndex)) {
                     continue;
                 }
                 row[colIndex] = n; //填写
@@ -492,7 +542,6 @@ var Generator = function () {
     return Generator;
 }();
 
-exports.Generator = Generator;
 exports.default = Generator;
 
 /***/ }),
@@ -502,13 +551,22 @@ exports.default = Generator;
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Checker = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //检查数独解决方案
+
+
+var _toolkit = __webpack_require__(0);
+
+var _toolkit2 = _interopRequireDefault(_toolkit);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-Object.defineProperty(exports, "__esModule", { value: true });
-//检查数独解决方案
-var toolkit_1 = __webpack_require__(0);
 function checkArray(array) {
     var len = array.length;
     var marks = new Array(len); //标记数组
@@ -537,13 +595,13 @@ function checkArray(array) {
 //处理：对 matrix 行，列，宫进行检查，并填写 marks
 //输出：检查是否成功，marks 为二维数组，与 matrix 的值一一对应
 
-var Checker = function () {
+var Checker = exports.Checker = function () {
     function Checker(matrix) {
         _classCallCheck(this, Checker);
 
         this._success = false;
         this._matrix = matrix;
-        this._matrixMarks = toolkit_1.default.matrix.makeMatrix(true);
+        this._matrixMarks = _toolkit2.default.matrix.makeMatrix(true);
     }
 
     _createClass(Checker, [{
@@ -593,13 +651,13 @@ var Checker = function () {
         key: "checkBoxes",
         value: function checkBoxes() {
             for (var boxIndex = 0; boxIndex < 9; boxIndex++) {
-                var boxes = toolkit_1.default.box.getBoxCells(this._matrix, boxIndex);
+                var boxes = _toolkit2.default.box.getBoxCells(this._matrix, boxIndex);
                 var marks = checkArray(boxes);
                 for (var cellIndex = 0; cellIndex < 9; cellIndex++) {
                     if (!marks[cellIndex]) {
-                        var _toolkit_1$default$bo = toolkit_1.default.box.convertFromBoxIndex(boxIndex, cellIndex),
-                            rowIndex = _toolkit_1$default$bo.rowIndex,
-                            colIndex = _toolkit_1$default$bo.colIndex;
+                        var _Toolkit$box$convertF = _toolkit2.default.box.convertFromBoxIndex(boxIndex, cellIndex),
+                            rowIndex = _Toolkit$box$convertF.rowIndex,
+                            colIndex = _Toolkit$box$convertF.colIndex;
 
                         this._matrixMarks[rowIndex][colIndex] = false;
                     }
@@ -621,7 +679,6 @@ var Checker = function () {
     return Checker;
 }();
 
-exports.Checker = Checker;
 exports.default = Checker;
 // const gen = new Generator();
 // gen.generate();
@@ -638,15 +695,17 @@ exports.default = Checker;
 
 "use strict";
 
-//处理弹出的操作面板
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-Object.defineProperty(exports, "__esModule", { value: true });
-
-var PopupNumbers = function () {
+//处理弹出的操作面板
+var PopupNumbers = exports.PopupNumbers = function () {
     function PopupNumbers($panel) {
         var _this = this;
 
@@ -703,7 +762,6 @@ var PopupNumbers = function () {
     return PopupNumbers;
 }();
 
-exports.PopupNumbers = PopupNumbers;
 exports.default = PopupNumbers;
 
 /***/ })

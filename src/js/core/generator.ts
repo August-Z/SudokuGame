@@ -3,10 +3,10 @@ import Toolkit from "./toolkit";
 
 export class Generator {
 
-    matrix: any;
-    orders: any;
+    matrix: number[][];
+    orders: number[][];
 
-    generate() {
+    generate(): void {
         while (!this.internalGenerate()) {
             // console.log('try again');
         }
@@ -24,12 +24,12 @@ export class Generator {
         return true;
     }
 
-    fillNumber(n: number) {
+    private fillNumber(n: number) {
         return this.fillRow(n, 0);
     }
 
     //递归函数
-    fillRow(n: number, rowIndex: number) {
+    private fillRow(n: number, rowIndex: number) {
 
         //填充结束
         if (rowIndex > 8) {
