@@ -271,9 +271,8 @@ TypeScript 始于 JavaScript，归于 JavaScript，运行下面命令，你将�
     *   能明确推导时：箭头函数可以不申明类型
 
 3.  指定为对象类型时，可以使用接口
-
+**定义宫坐标工具集中所需的接口**
 ```typescript
-//在宫坐标系工具集中，可以直接实现下列接口
 
 export interface IBoxCoord {
     boxIndex: number,
@@ -284,7 +283,11 @@ export interface IRowColCoord {
     rowIndex: number,
     colIndex: number
 }
+```
 
+**在指定类型中可指定为实现接口的对象：**
+
+```typescript
 /**
  * 宫坐标系工具集
  * @type {{getBoxCells(matrix: number[][], boxIndex: number): number[]; convertToBoxIndex(rowIndex: number, colIndex: number): IBoxCoord; convertFromBoxIndex(boxIndex: number, cellIndex: number): IRowColCoord}}
