@@ -228,7 +228,7 @@ class Point{
     }
 }
 ```
-TypeScript
+TypeScript:
 ```typescript
 class Point{
     private _x :number;
@@ -258,3 +258,15 @@ TypeScript 始于 JavaScript，归于 JavaScript，运行下面命令，你将�
 ```
     tsc point.ts
 ```
+
+### ES6 -> TypeScript 小结  
+1.  申明类成员
+
+    *   成员变量必须申明了才能使用(赋值、取值)
+2.  申明类型
+    *   未生申明类型默认当作 **any** 类型
+    
+    *   建议：申明 **类成员类型**
+    *   建议：申明方法 / 函数的 **参数类型** 和 **返回类型**
+    *   能明确推导时：局部变量可以不申明类型
+    *   能明确推导时：箭头函数可以不申明类型
