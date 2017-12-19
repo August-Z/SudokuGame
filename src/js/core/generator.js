@@ -1,18 +1,16 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 //生成数独解决方案
-const toolkit_1 = require("./toolkit");
-class Generator {
+import Toolkit from "./toolkit";
+export class Generator {
     generate() {
         while (!this.internalGenerate()) {
             // console.log('try again');
         }
     }
     internalGenerate() {
-        this.matrix = toolkit_1.default.matrix.makeMatrix();
-        this.orders = toolkit_1.default.matrix.makeMatrix()
+        this.matrix = Toolkit.matrix.makeMatrix();
+        this.orders = Toolkit.matrix.makeMatrix()
             .map((row) => row.map((v, i) => i))
-            .map((row) => toolkit_1.default.matrix.shuffle(row));
+            .map((row) => Toolkit.matrix.shuffle(row));
         for (let n = 1; n <= 9; n++) {
             if (!this.fillNumber(n))
                 return false;
@@ -37,7 +35,7 @@ class Generator {
                 continue;
             }
             //检查这个是否可以填 n
-            if (!toolkit_1.default.matrix.checkFillable(this.matrix, n, rowIndex, colIndex)) {
+            if (!Toolkit.matrix.checkFillable(this.matrix, n, rowIndex, colIndex)) {
                 continue;
             }
             row[colIndex] = n; //填写
@@ -51,5 +49,4 @@ class Generator {
         return false;
     }
 }
-exports.Generator = Generator;
-exports.default = Generator;
+export default Generator;

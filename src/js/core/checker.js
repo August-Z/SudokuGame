@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 //检查数独解决方案
-const toolkit_1 = require("./toolkit");
+import Toolkit from "./toolkit";
 function checkArray(array) {
     const len = array.length;
     const marks = new Array(len); //标记数组
@@ -29,11 +27,11 @@ function checkArray(array) {
 //输入：matrix，用户完成的数独数据，9 x 9
 //处理：对 matrix 行，列，宫进行检查，并填写 marks
 //输出：检查是否成功，marks 为二维数组，与 matrix 的值一一对应
-class Checker {
+export class Checker {
     constructor(matrix) {
         this._success = false;
         this._matrix = matrix;
-        this._matrixMarks = toolkit_1.default.matrix.makeMatrix(true);
+        this._matrixMarks = Toolkit.matrix.makeMatrix(true);
     }
     get matrixMarks() {
         return this._matrixMarks;
@@ -76,19 +74,18 @@ class Checker {
     }
     checkBoxes() {
         for (let boxIndex = 0; boxIndex < 9; boxIndex++) {
-            const boxes = toolkit_1.default.box.getBoxCells(this._matrix, boxIndex);
+            const boxes = Toolkit.box.getBoxCells(this._matrix, boxIndex);
             const marks = checkArray(boxes);
             for (let cellIndex = 0; cellIndex < 9; cellIndex++) {
                 if (!marks[cellIndex]) {
-                    const { rowIndex, colIndex } = toolkit_1.default.box.convertFromBoxIndex(boxIndex, cellIndex);
+                    const { rowIndex, colIndex } = Toolkit.box.convertFromBoxIndex(boxIndex, cellIndex);
                     this._matrixMarks[rowIndex][colIndex] = false;
                 }
             }
         }
     }
 }
-exports.Checker = Checker;
-exports.default = Checker;
+export default Checker;
 // const gen = new Generator();
 // gen.generate();
 // const matrix = gen.matrix;

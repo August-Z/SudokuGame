@@ -1,11 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 //生成数独游戏
-const generator_1 = require("./generator");
-class Sudoku {
+import Generator from "./generator";
+export class Sudoku {
     constructor() {
         //生成完成的解决方案
-        const gen = new generator_1.default();
+        const gen = new Generator();
         gen.generate();
         this.solutionMatrix = gen.matrix;
     }
@@ -17,5 +15,4 @@ class Sudoku {
         });
     }
 }
-exports.Sudoku = Sudoku;
-exports.default = Sudoku;
+export default Sudoku;

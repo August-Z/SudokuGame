@@ -1,7 +1,5 @@
-"use strict";
 //处理弹出的操作面板
-Object.defineProperty(exports, "__esModule", { value: true });
-class PopupNumbers {
+export class PopupNumbers {
     constructor($panel) {
         this._$panel = $panel.hide().removeClass("hidden");
         this._$panel.on("click", "span", (e) => {
@@ -50,5 +48,4 @@ class PopupNumbers {
         this._$panel.hide();
     }
 }
-exports.PopupNumbers = PopupNumbers;
-exports.default = PopupNumbers;
+export default PopupNumbers;

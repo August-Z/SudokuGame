@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * 宫坐标系工具集
  * @type {{getBoxCells(*, *): *, convertToBoxIndex(*, *): *, convertFromBoxIndex(*, *): *}}
@@ -81,7 +79,7 @@ class MatrixToolkit {
     }
 }
 //工具集
-class Toolkit {
+export class Toolkit {
     //矩阵与数组相关的工具
     static get matrix() {
         return MatrixToolkit;
@@ -91,5 +89,4 @@ class Toolkit {
         return boxToolkit;
     }
 }
-exports.Toolkit = Toolkit;
-exports.default = Toolkit;
+export default Toolkit;
