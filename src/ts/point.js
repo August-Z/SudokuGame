@@ -1,3 +1,4 @@
+"use strict";
 var Point = /** @class */ (function () {
     function Point(x, y) {
         this._x = x;

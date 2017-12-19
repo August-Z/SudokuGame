@@ -1,21 +1,21 @@
+"use strict";
 //生成数独游戏
-const Generator = require("./generator.js");
-
-class Sudoku {
-    constructor() {
+var Generator = require("./generator.js");
+var Sudoku = /** @class */ (function () {
+    function Sudoku() {
         //生成完成的解决方案
-        const gen = new Generator();
+        var gen = new Generator();
         gen.generate();
         this.solutionMatrix = gen.matrix;
     }
-
-    make(level = 5) {
+    Sudoku.prototype.make = function (level) {
+        if (level === void 0) { level = 5; }
         // const shouldRid = Math.random() * 9 < level;
         //生成迷盘
-        this.puzzleMatrix = this.solutionMatrix.map(row => {
-            return row.map(cell => Math.random() * 9 < level ? 0 : cell);
-        })
-    }
-}
-
+        this.puzzleMatrix = this.solutionMatrix.map(function (row) {
+            return row.map(function (cell) { return Math.random() * 9 < level ? 0 : cell; });
+        });
+    };
+    return Sudoku;
+}());
 module.exports = Sudoku;
