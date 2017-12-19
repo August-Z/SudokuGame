@@ -172,4 +172,42 @@ popup -- (click) --> n -- (fill) --> cell
 
 **n为面板所选的数字**
 
+
+# 从 JavaScript 转换至 TypeScript
+
+### TypeScript 的常见类型
+#### 与 js 相同的
+*   Boolean
+
+*   Number
+*   String
+*   Array
+
+#### 与 js 或其他语言类似的，或在 ts 中具有特殊含义的
+*   Tuple(元组，解构赋值时会运用)
+
+*   Enum(枚举)
+*   interface(接口)
+*   class(类)
+*   Any(表示任意类型，通常如果不指定数据类型，那么返回的类型就是 Any)
+*   Void(表示无返回值的类型，通常可以定义在函数类型中)
+*   Null(TypeScript对于 null 的处理比较复杂，与 js 并不相同)
+*   Undefined(相同于 js 中的 undefined)
+*   Never(表示无法返回的类型，比如一个死循环函数，或是必定会出现异常的函数)  
+
+### 申明类型 - 常量/变量
+*   const 常量名:类型
+
+*   let 变量名:类型
+*   var 变量名:类型  
+
+### 申明类型 - 函数
+*   函数  
+    function 函数名(参数1:类型1，参数2:类型2):返回类型{}
+    
+*   函数表达式  
+    function (参数1:类型1，参数2:类型2):返回类型{}
+*   箭头函数(Lambda)  
+    (参数1:类型1，参数2:类型2):返回类型 => {}
+
   
