@@ -4,7 +4,7 @@ const gulp = require("gulp");
 gulp.task("webpack", () => {
     const webpack = require("webpack-stream");
     const config = require("./webpack.config.js");
-    gulp.src("./js/**/*.ts")
+    return gulp.src("./js/**/*.ts")
         .pipe(webpack(config,require("webpack")))
         .pipe(gulp.dest("../www/js"));
 });
@@ -12,7 +12,7 @@ gulp.task("webpack", () => {
 // 编译 less -> css
 gulp.task("less", () => {
     const less = require("gulp-less");
-    gulp.src("./less/*.less")
+    return gulp.src("./less/*.less")
         .pipe(less())
         .pipe(gulp.dest("../www/css"));
 });
