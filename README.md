@@ -261,12 +261,84 @@ TypeScript 始于 JavaScript，归于 JavaScript，运行下面命令，你将�
 
 ### ES6 -> TypeScript 小结  
 1.  申明类成员
-
     *   成员变量必须申明了才能使用(赋值、取值)
+
 2.  申明类型
     *   未生申明类型默认当作 **any** 类型
-    
     *   建议：申明 **类成员类型**
     *   建议：申明方法 / 函数的 **参数类型** 和 **返回类型**
     *   能明确推导时：局部变量可以不申明类型
     *   能明确推导时：箭头函数可以不申明类型
+
+3.  指定为对象类型时，可以使用接口
+
+```typescript
+//在宫坐标系工具集中，可以直接实现下列接口
+
+export interface IBoxCoord {
+    boxIndex: number,
+    cellIndex: number
+}
+
+export interface IRowColCoord {
+    rowIndex: number,
+    colIndex: number
+}
+
+/**
+ * 宫坐标系工具集
+ * @type {{getBoxCells(matrix: number[][], boxIndex: number): number[]; convertToBoxIndex(rowIndex: number, colIndex: number): IBoxCoord; convertFromBoxIndex(boxIndex: number, cellIndex: number): IRowColCoord}}
+ */
+const boxToolkit = {
+
+    getBoxCells(matrix: number[][], boxIndex: number): number[] {
+        const startRowIndex = Math.floor(boxIndex / 3) * 3;
+        const startColIndex = boxIndex % 3 * 3;
+        const result = [];
+        for (let cellIndex = 0; cellIndex < 9; cellIndex++) {
+            const rowIndex = startRowIndex + Math.floor(cellIndex / 3);
+            const colIndex = startColIndex + cellIndex % 3;
+            // console.log(rowIndex, colIndex);
+            result.push(matrix[rowIndex][colIndex]);
+        }
+        return result;
+    },
+
+    convertToBoxIndex(rowIndex: number, colIndex: number): IBoxCoord {
+        return {
+            boxIndex: Math.floor(rowIndex / 3) * 3 + Math.floor(colIndex / 3),
+            cellIndex: rowIndex % 3 * 3 + colIndex % 3
+        }
+    },
+
+    convertFromBoxIndex(boxIndex: number, cellIndex: number): IRowColCoord {
+        return {
+            rowIndex: Math.floor(boxIndex / 3) * 3 + Math.floor(cellIndex / 3),
+            colIndex: boxIndex % 3 * 3 + cellIndex % 3
+        }
+    }
+};
+```
+
+4.  在有多种数据类型的情况时，可以进行 "重载"
+
+```typescript
+class MatrixToolkit {
+
+    static makeRow(): number[];
+    static makeRow<T>(v: T): T[];
+    static makeRow(v: any = 0): any[] {
+        const array = new Array(9);
+        array.fill(v);
+        return array;
+    }
+
+    static makeMatrix(): number[][];
+    static makeMatrix<T>(v: T): T[][];
+    static makeMatrix(v: any = 0) :any[][]{
+        //使用映射来制造各不相同的 Array , 第二个参数代表了 map() 函数的参数(简写)
+        return Array.from({length: 9}, () => this.makeRow(v));
+    }
+    
+}
+```

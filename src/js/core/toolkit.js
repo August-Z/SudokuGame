@@ -1,6 +1,6 @@
 /**
  * 宫坐标系工具集
- * @type {{getBoxCells(*, *): *, convertToBoxIndex(*, *): *, convertFromBoxIndex(*, *): *}}
+ * @type {{getBoxCells(matrix: number[][], boxIndex: number): number[]; convertToBoxIndex(rowIndex: number, colIndex: number): IBoxCoord; convertFromBoxIndex(boxIndex: number, cellIndex: number): IRowColCoord}}
  */
 const boxToolkit = {
     getBoxCells(matrix, boxIndex) {
