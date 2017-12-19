@@ -14,7 +14,5 @@ class Point {
     public get y(): number {
         return this._y;
     }
-}
 
-let point = new Point(2, 3);
-console.log(point.x);
+}

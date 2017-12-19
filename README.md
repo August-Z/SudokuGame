@@ -210,4 +210,51 @@ popup -- (click) --> n -- (fill) --> cell
 *   箭头函数(Lambda)  
     (参数1:类型1，参数2:类型2):返回类型 => {}
 
-  
+### 申明类成员
+JavaScript:
+```javascript
+class Point{
+    constructor(x=0,y=0){
+        this._x = x;
+        this._y = y;
+    }
+    
+    get x(){
+        return this._x;
+    }
+    
+    get y(){
+        return this._y;
+    }
+}
+```
+TypeScript
+```typescript
+class Point{
+    private _x :number;
+    private _y :number;
+    
+    constructor(x:number,y:number){
+        this._x = x;
+        this._y = y;
+    }
+    
+    public get x():number{
+        return this._x;
+    }
+    
+    public get y():number{
+        return this._y
+    }
+}
+```
+
+### 如何将 point.ts 转译为 point.js ?
+首先安装 TypeScript，如果你没有解释器
+```
+    npm install -g typescript 
+```
+TypeScript 始于 JavaScript，归于 JavaScript，运行下面命令，你将得到最后的 point.js
+```
+    tsc point.ts
+```
